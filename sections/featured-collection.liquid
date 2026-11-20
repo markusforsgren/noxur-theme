@@ -1,0 +1,47 @@
+{%- assign collection = section.settings.collection -%}
+{%- if collection == blank -%}{%- assign collection = collections.all -%}{%- endif -%}
+{%- assign types = collection.products | map: 'type' | uniq | compact -%}
+
+<section class="wrap section" id="kollektion">
+  <div class="section__head reveal">
+    <h2 class="h2">{{ section.settings.heading }}</h2>
+    {%- if section.settings.show_filters and types.size > 1 -%}
+      <div class="tabs" role="group" aria-label="Filtrera kollektionen" data-filter-group>
+        <button class="tab" type="button" data-filter="all" aria-pressed="true">Alla</button>
+        {%- for t in types -%}
+          {%- if t != blank -%}
+            <button class="tab" type="button" data-filter="{{ t | handleize }}" aria-pressed="false">{{ t }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if collection.products_count > 0 -%}
+    <div class="grid">
+      {%- for product in collection.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <p class="muted">Lägg till produkter i en kollektion och välj den här i temaredigeraren.</p>
+  {%- endif -%}
+
+  {%- if section.settings.show_all -%}
+    <p style="margin-top:32px"><a class="btn btn--line" href="{{ collection.url }}">Visa alla</a></p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Utvald kollektion",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Rubrik", "default": "Kollektionen" },
+    { "type": "collection", "id": "collection", "label": "Kollektion" },
+    { "type": "range", "id": "limit", "label": "Antal produkter", "min": 3, "max": 24, "step": 1, "default": 9 },
+    { "type": "checkbox", "id": "show_filters", "label": "Visa filter per produkttyp", "default": true, "info": "Filtren byggs från produkternas typ, t.ex. Kronograf, Automatisk, Klassisk." },
+    { "type": "checkbox", "id": "show_all", "label": "Visa knappen 'Visa alla'", "default": true }
+  ],
+  "presets": [{ "name": "Utvald kollektion" }]
+}
+{% endschema %}

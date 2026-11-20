@@ -1,0 +1,37 @@
+{%- capture items -%}
+  {%- for block in section.blocks -%}
+    <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span><span class="marquee__sep" aria-hidden="true">{{ section.settings.separator }}</span>
+  {%- endfor -%}
+{%- endcapture -%}
+<div class="marquee marquee--{{ section.settings.size }}{% if section.settings.reverse %} marquee--rev{% endif %}">
+  <div class="marquee__track" style="--speed: {{ section.settings.speed }}s">
+    {{ items }}
+    <span style="display:contents" aria-hidden="true">{{ items }}</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Löpband",
+  "settings": [
+    { "type": "select", "id": "size", "label": "Storlek", "default": "small", "options": [{ "value": "small", "label": "Liten text" }, { "value": "large", "label": "Stor text" }] },
+    { "type": "checkbox", "id": "reverse", "label": "Rulla åt andra hållet", "default": false },
+    { "type": "range", "id": "speed", "label": "Tid per varv", "min": 15, "max": 90, "step": 5, "unit": "s", "default": 45 },
+    { "type": "text", "id": "separator", "label": "Avdelare", "default": "—" }
+  ],
+  "blocks": [
+    { "type": "text", "name": "Text", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Endast äkta varor" }] }
+  ],
+  "presets": [
+    {
+      "name": "Löpband",
+      "blocks": [
+        { "type": "text", "settings": { "text": "Endast äkta varor från auktoriserade leverantörer" } },
+        { "type": "text", "settings": { "text": "Leverans 2–4 dagar" } },
+        { "type": "text", "settings": { "text": "14 dagars ångerrätt" } },
+        { "type": "text", "settings": { "text": "Klarna och Swish" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

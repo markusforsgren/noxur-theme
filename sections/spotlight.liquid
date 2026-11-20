@@ -1,0 +1,75 @@
+{%- assign product = section.settings.product -%}
+{%- assign bg = section.settings.bg_text | default: product.title -%}
+<section class="spotlight" id="veckans">
+  {%- if bg != blank -%}
+    <div class="spotlight__bgtext slide-scroll" aria-hidden="true">{{ bg }} · {{ bg }} · {{ bg }}</div>
+  {%- endif -%}
+  <div class="wrap spotlight__inner">
+    <div class="spotlight__media">
+      <div class="spotlight__glow" aria-hidden="true"></div>
+      <div class="rotate-scroll">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'spotlight__img', loading: 'lazy', alt: section.settings.image.alt | default: product.title }}
+        {%- elsif product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1200 | image_tag: class: 'spotlight__img', loading: 'lazy', alt: product.featured_media.alt | default: product.title }}
+        {%- else -%}
+          <img class="spotlight__img" src="{{ 'hero-watch.png' | asset_url }}" alt="" width="405" height="721" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="spotlight__content reveal">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2">{{ product.title | default: 'Välj en produkt' }}</h2>
+      {%- if section.settings.text != blank -%}
+        <div class="soft" style="margin:24px 0 32px;max-width:460px;font-size:16px;line-height:1.75">{{ section.settings.text }}</div>
+      {%- else -%}
+        <div style="height:32px"></div>
+      {%- endif -%}
+      <dl class="spec">
+        {%- for block in section.blocks -%}
+          <div class="spec__row" {{ block.shopify_attributes }}><dt>{{ block.settings.label }}</dt><dd>{{ block.settings.value }}</dd></div>
+        {%- endfor -%}
+        {%- if product != blank -%}
+          <div class="spec__row"><dt>Pris</dt><dd>{{ product.price | money }}</dd></div>
+        {%- endif -%}
+      </dl>
+      {%- if product != blank -%}
+        {%- assign v = product.selected_or_first_available_variant -%}
+        {%- if product.has_only_default_variant and v.available -%}
+          {%- form 'product', product, data-ajax-cart: 'true' -%}
+            <input type="hidden" name="id" value="{{ v.id }}">
+            <button class="btn btn--solid" type="submit">Köp nu <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+          {%- endform -%}
+        {%- else -%}
+          <a class="btn btn--solid" href="{{ product.url }}">Se klockan <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Veckans ur",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Produkt" },
+    { "type": "image_picker", "id": "image", "label": "Egen bild (valfri)", "info": "Annars används produktens första bild. PNG med genomskinlig bakgrund blir snyggast." },
+    { "type": "text", "id": "eyebrow", "label": "Liten rubrik", "default": "Veckans ur" },
+    { "type": "text", "id": "bg_text", "label": "Stor bakgrundstext", "info": "Lämna tom för produktens namn." },
+    { "type": "richtext", "id": "text", "label": "Text" }
+  ],
+  "blocks": [
+    { "type": "spec", "name": "Specifikation", "settings": [
+      { "type": "text", "id": "label", "label": "Etikett", "default": "Boett" },
+      { "type": "text", "id": "value", "label": "Värde", "default": "43 mm, stål" }
+    ] }
+  ],
+  "presets": [{
+    "name": "Veckans ur",
+    "blocks": [
+      { "type": "spec", "settings": { "label": "Boett", "value": "43 mm, stål" } },
+      { "type": "spec", "settings": { "label": "Urverk", "value": "Kvarts, kronograf" } }
+    ]
+  }]
+}
+{% endschema %}

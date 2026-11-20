@@ -1,0 +1,27 @@
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span class="footer__logo">{{ section.settings.brand | default: shop.name }}</span>
+    <nav class="footer__menu" aria-label="Sidfot">
+      {%- for link in section.settings.menu.links -%}
+        <a class="navlink" href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="footer__pay">
+      {%- for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag }}
+      {%- endfor -%}
+    </div>
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.org_nr != blank %} · Org.nr {{ section.settings.org_nr }}{% endif %}</span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Sidfot",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Butiksnamn", "default": "NOXUR" },
+    { "type": "link_list", "id": "menu", "label": "Meny", "default": "footer" },
+    { "type": "text", "id": "org_nr", "label": "Organisationsnummer" }
+  ]
+}
+{% endschema %}

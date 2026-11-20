@@ -1,0 +1,27 @@
+<div class="wrap page-head">
+  <h1 class="h2">Kollektioner</h1>
+</div>
+<section class="wrap" style="padding-bottom:120px">
+  <div class="grid">
+    {%- for c in collections -%}
+      <article class="card reveal">
+        <a class="card__media" href="{{ c.url }}">
+          {%- if c.featured_image -%}
+            {{ c.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: c.title }}
+          {%- elsif c.products.first.featured_media -%}
+            {{ c.products.first.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', alt: c.title }}
+          {%- endif -%}
+          <span class="card__bar"></span>
+        </a>
+        <div class="card__body" style="padding-bottom:22px">
+          <h2 class="card__title"><a href="{{ c.url }}">{{ c.title }}</a></h2>
+          <p class="card__vendor">{{ c.products_count }} ur</p>
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Alla kollektioner" }
+{% endschema %}

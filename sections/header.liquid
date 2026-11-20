@@ -1,0 +1,40 @@
+<header class="header" data-header>
+  <div class="wrap header__inner{% if template.name == 'index' %} anim-fade{% endif %}">
+    <div>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="huvudmeny" aria-label="Meny">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+      <nav class="header__menu" id="huvudmeny" aria-label="Huvudmeny">
+        {%- for link in section.settings.menu.links -%}
+          <a class="navlink" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+    </div>
+
+    <a class="header__logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name }}
+      {%- else -%}
+        {{ section.settings.brand | default: shop.name }}
+      {%- endif -%}
+    </a>
+
+    <div class="header__actions">
+      <a class="navlink header__search" href="{{ routes.search_url }}">Sök</a>
+      <a class="btn btn--line" href="{{ routes.cart_url }}" style="min-height:44px;padding:0 18px;font-weight:400">
+        Korg (<span data-cart-count>{{ cart.item_count }}</span>)
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Sidhuvud",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Meny", "default": "main-menu" },
+    { "type": "text", "id": "brand", "label": "Butiksnamn (om ingen logga)", "default": "NOXUR" },
+    { "type": "image_picker", "id": "logo", "label": "Logga (valfri)" }
+  ]
+}
+{% endschema %}

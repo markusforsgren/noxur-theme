@@ -1,0 +1,44 @@
+<div class="wrap page-head">
+  <h1 class="h2">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}<div class="rte" style="margin-top:20px">{{ collection.description }}</div>{%- endif -%}
+</div>
+
+<section class="wrap" style="padding-bottom:120px">
+  {%- paginate collection.products by section.settings.per_page -%}
+    <div class="toolbar">
+      <span>{{ collection.products_count }} ur</span>
+      <form>
+        <label for="sort" class="visually-hidden">Sortera</label>
+        <select id="sort" name="sort_by" onchange="this.form.submit()">
+          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+      </form>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="grid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="muted">Inga ur här ännu.</p>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="Sidor">{{ paginate | default_pagination: next: 'Nästa →', previous: '← Föregående' }}</nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Kollektion",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produkter per sida", "min": 6, "max": 48, "step": 3, "default": 24 }
+  ]
+}
+{% endschema %}

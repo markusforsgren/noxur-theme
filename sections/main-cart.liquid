@@ -1,0 +1,46 @@
+<section class="wrap cart">
+  <h1 class="h2" style="margin-bottom:40px">Korg</h1>
+  {%- if cart.item_count > 0 -%}
+    {%- form 'cart', cart -%}
+      <div class="cart__items">
+        {%- for item in cart.items -%}
+          <div class="cart__item">
+            <a class="cart__img" href="{{ item.url }}">
+              {%- if item.image -%}{{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: item.product.title }}{%- endif -%}
+            </a>
+            <div>
+              <a class="cart__name" href="{{ item.url }}">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}<div class="cart__meta">{{ item.variant.title }}</div>{%- endunless -%}
+              <div class="cart__meta">{{ item.final_price | money }} st</div>
+              <div class="cart__qty">
+                <label for="qty-{{ forloop.index }}" class="visually-hidden">Antal för {{ item.product.title }}</label>
+                <input id="qty-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                <a class="cart__remove" href="{{ item.url_to_remove }}">Ta bort</a>
+              </div>
+            </div>
+            <div class="cart__line-price">{{ item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="cart__summary">
+        <div>
+          <div class="cart__total">Totalt {{ cart.total_price | money }}</div>
+          <div class="cart__note">Inklusive moms. Frakt räknas i kassan.</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button class="btn btn--line" type="submit" name="update">Uppdatera</button>
+          <button class="btn btn--solid" type="submit" name="checkout">Till kassan</button>
+        </div>
+      </div>
+    {%- endform -%}
+  {%- else -%}
+    <div class="empty">
+      <p class="soft">Korgen är tom.</p>
+      <a class="btn btn--solid" href="{{ routes.all_products_collection_url }}">Se kollektionen</a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Korg" }
+{% endschema %}

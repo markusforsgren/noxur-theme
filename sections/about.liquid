@@ -1,0 +1,40 @@
+<section class="wrap section" id="om">
+  <div class="about">
+    <h2 class="h2 reveal" style="font-size:clamp(36px,4.4vw,60px);line-height:1.08">{{ section.settings.heading }}{% if section.settings.heading_em != blank %}<br><em>{{ section.settings.heading_em }}</em>{% endif %}</h2>
+    <div class="reveal">
+      {%- if section.settings.text != blank -%}<div class="about__text">{{ section.settings.text }}</div>{%- endif -%}
+      <div class="about__rule"></div>
+      {%- for block in section.blocks -%}
+        <div class="point" {{ block.shopify_attributes }}>
+          <span class="point__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Om oss",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Rubrik", "default": "Färre ur." },
+    { "type": "text", "id": "heading_em", "label": "Rubrik, rad 2 (kursiv)", "default": "Bättre ur." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Vi säljer bara äkta klockor från auktoriserade leverantörer i EU. Varje modell är vald för att den är värd att bära.</p>" }
+  ],
+  "blocks": [
+    { "type": "point", "name": "Punkt", "settings": [
+      { "type": "text", "id": "title", "label": "Rubrik", "default": "Äkta, med kvitto på det" },
+      { "type": "text", "id": "text", "label": "Text", "default": "Tillverkarens garanti följer med varje klocka." }
+    ] }
+  ],
+  "presets": [{
+    "name": "Om oss",
+    "blocks": [
+      { "type": "point", "settings": { "title": "Äkta, med kvitto på det", "text": "Tillverkarens garanti följer med varje klocka." } },
+      { "type": "point", "settings": { "title": "Snabbt från lager i EU", "text": "Inga veckor av väntan, inga tullavgifter." } },
+      { "type": "point", "settings": { "title": "Svensk kundtjänst", "text": "En människa svarar, på svenska." } }
+    ]
+  }]
+}
+{% endschema %}

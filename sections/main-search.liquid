@@ -1,0 +1,35 @@
+<div class="wrap page-head">
+  <h1 class="h2">Sök</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top:28px;max-width:560px">
+    <div class="newsletter__field">
+      <label for="q" class="visually-hidden">Sök</label>
+      <input id="q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Sök efter klockor">
+      <input type="hidden" name="type" value="product">
+      <button type="submit">Sök →</button>
+    </div>
+  </form>
+</div>
+
+<section class="wrap" style="padding-bottom:120px">
+  {%- if search.performed -%}
+    {%- paginate search.results by 24 -%}
+      <p class="muted" style="margin-bottom:24px">{{ search.results_count }} träffar för ”{{ search.terms }}”</p>
+      {%- if search.results_count > 0 -%}
+        <div class="grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Sidor">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Sökresultat" }
+{% endschema %}
