@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "brand": "NOXUR",
+        "text_style": "layered",
+        "tagline": "Äkta ur. Levererade inom några dagar.",
+        "button_label": "Se kollektionen",
+        "button_link": "#kollektion"
+      }
+    },
+    "marquee_small": {
+      "type": "marquee",
+      "blocks": {
+        "m1": { "type": "text", "settings": { "text": "Endast äkta varor från auktoriserade leverantörer" } },
+        "m2": { "type": "text", "settings": { "text": "Leverans 2–4 dagar" } },
+        "m3": { "type": "text", "settings": { "text": "14 dagars ångerrätt" } },
+        "m4": { "type": "text", "settings": { "text": "Klarna och Swish" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"],
+      "settings": { "size": "small", "reverse": false, "speed": 45, "separator": "—" }
+    },
+    "collection": {
+      "type": "featured-collection",
+      "settings": { "heading": "Kollektionen", "limit": 9, "show_filters": true, "show_all": true }
+    },
+    "spotlight": {
+      "type": "spotlight",
+      "blocks": {
+        "s1": { "type": "spec", "settings": { "label": "Boett", "value": "43 mm, stål" } },
+        "s2": { "type": "spec", "settings": { "label": "Urverk", "value": "Kvarts, kronograf" } }
+      },
+      "block_order": ["s1", "s2"],
+      "settings": { "eyebrow": "Veckans ur" }
+    },
+    "marquee_large": {
+      "type": "marquee",
+      "blocks": {
+        "l1": { "type": "text", "settings": { "text": "Chronograph" } },
+        "l2": { "type": "text", "settings": { "text": "Automatic" } },
+        "l3": { "type": "text", "settings": { "text": "Diver" } },
+        "l4": { "type": "text", "settings": { "text": "Dress" } },
+        "l5": { "type": "text", "settings": { "text": "Racing" } }
+      },
+      "block_order": ["l1", "l2", "l3", "l4", "l5"],
+      "settings": { "size": "large", "reverse": true, "speed": 60, "separator": "◦" }
+    },
+    "about": {
+      "type": "about",
+      "blocks": {
+        "p1": { "type": "point", "settings": { "title": "Äkta, med kvitto på det", "text": "Tillverkarens garanti följer med varje klocka." } },
+        "p2": { "type": "point", "settings": { "title": "Snabbt från lager i EU", "text": "Inga veckor av väntan, inga tullavgifter." } },
+        "p3": { "type": "point", "settings": { "title": "Svensk kundtjänst", "text": "En människa svarar, på svenska." } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "newsletter": { "type": "newsletter", "settings": {} }
+  },
+  "order": ["hero", "marquee_small", "collection", "spotlight", "marquee_large", "about", "newsletter"]
+}

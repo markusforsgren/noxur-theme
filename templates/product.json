@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {},
+      "blocks": {
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "text": "Äkta vara med tillverkarens garanti"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "text": "Skickas från lager i EU, 2–4 dagar"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "text": "14 dagars ångerrätt"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
