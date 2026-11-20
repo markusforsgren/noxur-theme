@@ -1,0 +1,14 @@
+{%- liquid
+  if variant
+    assign p = variant.price
+    assign c = variant.compare_at_price
+  else
+    assign p = product.price
+    assign c = product.compare_at_price
+  endif
+-%}
+<span class="card__price{% if c > p %} price--sale{% endif %}">
+  {%- if product.price_varies and variant == blank -%}Från {% endif -%}
+  {{ p | money }}
+  {%- if c > p -%}<s class="price__compare"><span class="visually-hidden">Ordinarie pris </span>{{ c | money }}</s>{%- endif -%}
+</span>
